@@ -1,0 +1,29 @@
+# docker 애플리케이션 서비스, 네트워크, 볼륨을 정의하는 파일
+
+version: "3.9"
+
+# db서비스와, web 서비스 정의
+services:
+  db:
+    image: postgres
+    volumes:
+    # volume은 영구 데이터 저장소
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=ikaria
+      - POSTGRES_USER=seoyun
+      - POSTGRES_PASSWORD=1234
+  web:
+  # 이미지가 아직 존재하지 않기에, 현재 디렉토리에서 이미지를 빌드
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=ikaria
+      - POSTGRES_USER=seoyun
+      - POSTGRES_PASSWORD=1234
+    depends_on:
+      - db
