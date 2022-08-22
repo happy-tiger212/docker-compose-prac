@@ -8,6 +8,7 @@ services:
     image: postgres
     volumes:
     # volume은 영구 데이터 저장소
+    # 컨테이너의 /var/lib/postgresql/data의 변경사항을 ./data/db에도  업데이트 
       - ./data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=ikaria
