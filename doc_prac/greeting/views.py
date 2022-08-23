@@ -9,15 +9,13 @@ class GreetingView(View):
         try:
             data            = json.loads(request.body)
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-            print('x', x_forwarded_for)
+
             name = data['name']
 
             if x_forwarded_for:
                 ip = x_forwarded_for.split(',')[0].strip()
-                print("proxy?", ip)
             else:
                 ip = request.META.get('REMOTE_ADDR')
-                print(ip)
 
             if not User.objects.filter(name=name).exists():
                 User.objects.create(name = name, ip_address = ip)
