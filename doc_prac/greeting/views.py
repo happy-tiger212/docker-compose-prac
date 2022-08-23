@@ -8,15 +8,14 @@ class GreetingView(View):
     def post(self, request):
         try:
             data            = json.loads(request.body)
-            x_forwarded_for = request.headers.get('HTTP_X_FORWARDED_FOR')
-
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            print('x', x_forwarded_for)
             name = data['name']
 
             if x_forwarded_for:
-                # 여기서 왜 맨 마지막껄하지>? 맨앞이 클라이언트인데?
-                ip = x_forwarded_for.split(',')[-1].strip()
+                ip = x_forwarded_for.split(',')[0].strip()
+                print("proxy?", ip)
             else:
-                # REMOTE_ADDR이 뭐지?
                 ip = request.META.get('REMOTE_ADDR')
                 print(ip)
 

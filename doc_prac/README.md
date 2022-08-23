@@ -28,3 +28,16 @@
 ## 그 외 사항
 - `python manage.py makemigrations/migrate`은 `docker exec -it <db 컨테이너> /bin/bash`에서만 가능
 - 컨테이너가 실행된 환경에서만 bash에 접근 가능
+
+## 지식 + 궁금증
+- REMOTE_ADDR은 사이트에 접속한 시스템의 IP이며 클라이언트의 실제 IP가 아닌 실제로 프록시 주소일 수 있습니다.
+
+HTTP_X_FORWARDED_FOR가 채워지면 클라이언트의 실제 IP와 클라이언트가 쉼표로 구분된 목록으로 사이트에 도달하기 위해 통과한 프록시 IP를 포함해야 합니다. 항상 단일 IP인 것처럼 취급하지 마십시오(대부분의 경우에도).
+
+따라서 프록시가 포함되지 않은 경우 일치하지만 프록시가 포함된 경우 HTTP_X_FORWARDED_FOR은 다음과 같을 수 있습니다.
+
+realclientIP, 1st_proxyIP, 2nd_proxyIP, last_proxyIP
+
+이 경우 REMOTE_ADDR에는 last_proxyIP만 포함됩니다.
+
+-> 그런데 왜  HTTP_X_FORWARDED_FOR는 None이 나오고, 왜 [0]이 아닌 [-1]을 사용하지?
