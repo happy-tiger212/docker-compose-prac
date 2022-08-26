@@ -24,7 +24,7 @@
 15. `docker-compose up`으로 컨테이너 실행
 16. django container의 bash 열어`makemigration`, `migrate` 진행
 17. postgreSQL 확인
-
+### thread로 post, get 해보기
 ## 그 외 사항
 - `python manage.py makemigrations/migrate`은 `docker exec -it <db 컨테이너> /bin/bash`에서만 가능
 - 컨테이너가 실행된 환경에서만 bash에 접근 가능
